@@ -1,50 +1,52 @@
 # README
 
 ## usersテーブル
-|  Column   |  type    |  Options   |
-|   ----    |   ----   |    ----    |
-|  nickname |  string  | null: false|
-|  email    |  string  | null: false|
-|  password |  string  | null: false|
-|  name     |  string  | null: false|
-|  name-kana|  string  | null: false|
-|  birthday |  integer | null: false|
+|  Column         |  type    |  Options   |
+|   ----          |   ----   |    ----    |
+|  nickname       |  string  | null: false|
+|  email          |  string  | null: false|
+|  password       |  string  | null: false|
+|  first_name     |  string  | null: false|
+|  last_name      |  string  | null: false|
+|  kana_first     |  string  | null: false|
+|  kana_last      |  string  | null: false|
+|  birthday       |  date    | null: false|
 
 ### Association
-- has_many :merchandises
-- has_many :purchases
+- has_one :address
+- has_many :items
 
-## merchandiseテーブル
-|  Column                  |  type       |  Options                     |
-| ----                     | ----        | ----                         |
-|  title                   |  string     | null: false                  |
-|  explanation             |  text       | null: false                  |
-|  category                |  string     | null: false                  |
-|  price                   |  integer    | null: false                  |
-|  status                  |  string     | null: false                  |
-|  burden_of_delivery_fee  |  string     | null: false                  |
-|  shipping_area           |  string     | null: false                  |
-|  user_id                 |  reference  | null: false,foreign_key: true|
+## itemsテーブル
+|  Column                     |  type       |  Options                     |
+| ----                        | ----        | ----                         |
+|  title                      |  string     | null: false                  |
+|  explanation                |  text       | null: false                  |
+|  category_id                |  integer    | null: false                  |
+|  price                      |  integer    | null: false                  |
+|  status_id                  |  integer    | null: false                  |
+|  burden_of_delivery_fee_id  |  integer    | null: false                  |
+|  shipping_area_id           |  integer    | null: false                  |
+|  user                       |  reference  | null: false,foreign_key: true|
 
 
 ### Association
-- has_one :purchase
+- has_one :address
 - belongs_to :user
 
 
-## purchaseテーブル
+## addressテーブル
 |  Column          |  type       |  Options                     |
 | ----             | ----        | ----                         |
-|  credit_number   |  integer    | null: false                  |
-|  credit_exp      |  integer    | null: false                  |
-|  credit_cvv      |  integer    | null: false                  |
 |  postal_code     |  integer    | null: false                  |
-|  street_address  |  string     | null: false                  |
+|  prefecture      |  string     | null: false                  |
+|  city            |  string     | null: false                  |
 |  address         |  integer    | null: false                  |
+|  building        |  string     |                              |
 |  phone_number    |  integer    | null: false                  |
-|  user_id         |  reference  | null: false,foreign_key: true|
+|  user            |  reference  | null: false,foreign_key: true|
+|  merchandise     |  reference  | null: false,foreign_key: true|
 
 
 ### Association
-- belongs_to :merchandise
+- belongs_to :item
 - belongs_to :user
