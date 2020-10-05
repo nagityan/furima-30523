@@ -1,24 +1,50 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## usersテーブル
+|  Column  |  type  |  Options|
+| ---- | ---- | ---- |
+|  nickname  |  string  | null: false|
+|  email  |  string  | null: false|
+|  password  |  string  | null: false|
+|  name  |  string  | null: false|
+|  name-kana  |  string  | null: false|
+|  birthday  |  integer  | null: false|
 
-Things you may want to cover:
+### Association
+- has_many :merchandises
+- has_many :purchases
 
-* Ruby version
+## merchandiseテーブル
+|  Column  |  type  |  Options|
+| ---- | ---- | ---- |
+|  title  |  string  | null: false|
+|  explanation  |  text | null: false|
+|  category  |  string | null: false|
+|  price  |  integer | null: false|
+|  status  |  string | null: false|
+|  burden_of_delivery_fee  |  string | null: false|
+|  shipping_area  |  string | null: false|
+|  user_id  |  reference  | null: false,foreign_key: true|
 
-* System dependencies
 
-* Configuration
+### Association
+- has_one :purchase
+- belongs_to :user
 
-* Database creation
 
-* Database initialization
+## purchaseテーブル
+|  Column  |  type  |  Options|
+| ---- | ---- | ---- |
+|  credit_number  |  integer  | null: false|
+|  credit_exp  |  integer | null: false|
+|  credit_cvv  |  integer | null: false|
+|  postal_code  |  integer | null: false|
+|  street_address  |  string | null: false|
+|  address  |  integer | null: false|
+|  phone_number  |  integer| null: false|
+|  user_id  |  reference  | null: false,foreign_key: true|
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Association
+- belongs_to :merchandise
+- belongs_to :user
