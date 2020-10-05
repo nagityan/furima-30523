@@ -27,6 +27,7 @@
 |  status_id                  |  integer    | null: false                  |
 |  burden_of_delivery_fee_id  |  integer    | null: false                  |
 |  shipping_area_id           |  integer    | null: false                  |
+|  shipping_date_id           |  integer    | null: false                  |
 |  user                       |  reference  | null: false,foreign_key: true|
 
 
