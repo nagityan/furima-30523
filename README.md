@@ -13,8 +13,9 @@
 |  birthday       |  date    | null: false|
 
 ### Association
-- has_one :address
+- has_many :address
 - has_many :items
+- has_many :transactions
 
 ## itemsテーブル
 |  Column                     |  type       |  Options                     |
@@ -31,18 +32,19 @@
 
 ### Association
 - has_one :address
+- has_one :transaction
 - belongs_to :user
 
 
 ## addressテーブル
 |  Column          |  type       |  Options                     |
 | ----             | ----        | ----                         |
-|  postal_code     |  integer    | null: false                  |
-|  prefecture      |  string     | null: false                  |
+|  postal_code     |  string     | null: false                  |
+|  prefecture_id   |  integer    | null: false                  |
 |  city            |  string     | null: false                  |
-|  address         |  integer    | null: false                  |
+|  address         |  string     | null: false                  |
 |  building        |  string     |                              |
-|  phone_number    |  integer    | null: false                  |
+|  phone_number    |  string     | null: false                  |
 |  user            |  reference  | null: false,foreign_key: true|
 |  merchandise     |  reference  | null: false,foreign_key: true|
 
@@ -50,3 +52,19 @@
 ### Association
 - belongs_to :item
 - belongs_to :user
+- belongs_to :transaction
+
+
+
+
+## transactionテーブル
+|  Column          |  type       |  Options                     |
+| ----             | ----        | ----                         |
+|  user            |  reference  | null: false,foreign_key: true|
+|  item            |  reference  | null: false,foreign_key: true|
+
+
+### Association
+- belongs_to :item
+- belongs_to :user
+- has_one: address
