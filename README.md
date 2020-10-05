@@ -13,9 +13,8 @@
 |  birthday       |  date    | null: false|
 
 ### Association
-- has_many :address
 - has_many :items
-- has_many :transactions
+- has_many :purchases
 
 ## itemsテーブル
 |  Column                     |  type       |  Options                     |
@@ -32,12 +31,11 @@
 
 
 ### Association
-- has_one :address
-- has_one :transaction
+- has_one :purchase
 - belongs_to :user
 
 
-## addressテーブル
+## addressesテーブル
 |  Column          |  type       |  Options                     |
 | ----             | ----        | ----                         |
 |  postal_code     |  string     | null: false                  |
@@ -46,23 +44,22 @@
 |  address         |  string     | null: false                  |
 |  building        |  string     |                              |
 |  phone_number    |  string     | null: false                  |
-|  user            |  reference  | null: false,foreign_key: true|
-|  merchandise     |  reference  | null: false,foreign_key: true|
+|  purchase        |  reference  | null: false,foreign_key: true|
+
 
 
 ### Association
-- belongs_to :item
-- belongs_to :user
 - belongs_to :transaction
 
 
 
 
-## transactionテーブル
-|  Column          |  type       |  Options                     |
-| ----             | ----        | ----                         |
-|  user            |  reference  | null: false,foreign_key: true|
-|  item            |  reference  | null: false,foreign_key: true|
+## purchasesテーブル
+|  Column          　　　|  type       |  Options                     |
+| ----             　　　| ----        | ----                         |
+|  user            　　　|  reference  | null: false,foreign_key: true|
+|  item            　　　|  reference  | null: false,foreign_key: true|
+
 
 
 ### Association
