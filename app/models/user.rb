@@ -3,9 +3,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  validates :nickname, presence: true
-
+  
+  with_options presence: true do
+    validates :nickname
+    validates :birthday
+  end
+  
   with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/, message: '全角文字を使用してください' } do
   validates :first_name
   validates :last_name
@@ -15,8 +18,6 @@ class User < ApplicationRecord
   validates :kana_first
   validates :kana_last
   end
-
-  validates :birthday, presence: true
 
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
   validates_format_of :password, with: PASSWORD_REGEX
