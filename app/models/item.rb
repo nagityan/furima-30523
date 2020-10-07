@@ -5,11 +5,13 @@ class Item < ApplicationRecord
   belongs_to_active_hash :shipping_area
   belongs_to_active_hash :shipping_date
   belongs_to_active_hash :burden_of_delivery_fee
-
-  validates :title, :explanation,:category,:status,:burden_of_delivery_fee,:shipping_area,:shipping_date, presence: true
-  validates :genre_id,:category,:status,:burden_of_delivery_fee,:shipping_area,:shipping_date, numericality: { other_than: 1 } 
-
+  
   has_one_attached :image
+  belongs_to :user
+
+  validates :title, :explanation,:image,:price, presence: true
+  validates :category_id,:status_id,:burden_of_delivery_fee_id,:shipping_area_id,:shipping_date_id, numericality: { other_than: 1 } 
+
 
 end
 
