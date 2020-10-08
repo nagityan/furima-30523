@@ -7,7 +7,8 @@ function feeAndProfit(){
   const profit = document.getElementById("profit")
   const itemfeecalc = itemfee.innerText = pricevalue * 0.1
   profit.innerText = (pricevalue - itemfeecalc)
-
 })}
 
 window.addEventListener("load",feeAndProfit)
+
+
