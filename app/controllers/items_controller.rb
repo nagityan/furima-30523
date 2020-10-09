@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :find_item, only:[:show]
+  before_action :find_item, only:[:show,:edit]
+  before_action :move_to_top,only:[:edit]
+
   def index
     @items = Item.all.order("created_at DESC")
   end
@@ -16,6 +18,20 @@ class ItemsController < ApplicationController
     end
   end
 
+  #ページ移行時に手数料などの表示のため
+  def edit
+    @price_fee = (find_item.price * 0.1).to_i
+    @profit = (find_item.price - @price_fee).to_i
+  end
+
+  def update
+    @item = find_item
+    if @item.update(params_data)
+      redirect_to item_path(@item)
+    else
+      render :edit
+    end
+  end
 
   private
   def params_data
@@ -24,5 +40,11 @@ class ItemsController < ApplicationController
 
   def find_item
     @item = Item.find(params[:id])
+  end
+
+  def move_to_top
+    unless current_user.id == Item.find(params[:id]).user_id
+      redirect_to root_path
+    end
   end
 end
