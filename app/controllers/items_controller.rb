@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :find_item, only:[:show,:edit]
+  before_action :find_item, only:[:show,:edit,:update]
   before_action :move_to_top,only:[:edit]
 
   def index
@@ -20,12 +20,11 @@ class ItemsController < ApplicationController
 
   #ページ移行時に手数料などの表示のため
   def edit
-    @price_fee = (find_item.price * 0.1).to_i
-    @profit = (find_item.price - @price_fee).to_i
+    @price_fee = (@item.price * 0.1).to_i
+    @profit = (@item.price - @price_fee).to_i
   end
 
   def update
-    @item = find_item
     if @item.update(params_data)
       redirect_to item_path(@item)
     else
