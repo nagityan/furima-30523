@@ -1,14 +1,21 @@
 class ItemsController < ApplicationController
+  #ログインしていないユーザーでもTOPと詳細画面は見ることができる
   before_action :authenticate_user!, except: [:index, :show]
+
+  #@itemを定義
   before_action :find_item, only:[:show,:edit,:update,:destroy]
+
+  #購入済の商品の"編集画面"には遷移できない
   before_action :move_to_top,only:[:edit]
 
   def index
     @items = Item.all.order("created_at DESC")
   end
+
   def new
     @item = Item.new
   end
+
   def create
     @item = Item.new(params_data)
     if @item.save
@@ -50,7 +57,7 @@ class ItemsController < ApplicationController
   end
 
   def move_to_top
-    unless current_user.id == Item.find(params[:id]).user_id
+    if current_user.id != @item.user_id  || @item.purchase.present?
       redirect_to root_path
     end
   end
