@@ -8,7 +8,7 @@ class UserPurchase
     validates :postal_code, format: { with: /\A\d{3}[-]\d{4}\z/}
     validates :city
     validates :address
-    validates :phone_number,format:{with: /\A\d{10,11}\z/}
+    validates :phone_number,format:{with: /\A\d{,11}\z/}
     validates :token
   end
 
