@@ -8,6 +8,9 @@ class PurchasesController < ApplicationController
   #@を定義
   before_action :item_find
   
+  #購入しようとしている人が出品者だった場合にリダイレクトする
+  before_action :go_to_top
+
   def new
     @user_purchase = UserPurchase.new
   end
@@ -46,6 +49,12 @@ class PurchasesController < ApplicationController
 
   def item_find
     @item = Item.find(params[:item_id])
+  end
+
+  def go_to_top
+    if current_user.id == @item.user_id
+      redirect_to root_path
+    end
   end
 
 end
