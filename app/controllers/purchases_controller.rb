@@ -9,16 +9,11 @@ class PurchasesController < ApplicationController
   before_action :item_find
   
   def new
-    item_find
     @user_purchase = UserPurchase.new
-    if current_user.id == @item.user_id || @item.purchase.present?
-      redirect_to root_path
-    end
   end
 
   #購入後はTOPページへ遷移
   def create
-    item_find
     @user_purchase = UserPurchase.new(params_data)
     if @user_purchase.valid?
       pay_item
@@ -36,7 +31,7 @@ class PurchasesController < ApplicationController
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"] 
-      price = Item.find(params[:item_id]).price 
+      price = @item.price 
         Payjp::Charge.create(
           amount: price,
           card: params[:token],    
