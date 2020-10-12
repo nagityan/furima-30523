@@ -23,7 +23,7 @@
       </span>
     </div>
 
-    <%# ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう %>
+    
   <% if user_signed_in? && @item.user.id == current_user.id %>
     <%unless @item.purchase.present?%>
     <%= link_to '商品の編集', edit_item_path(@item), method: :get, class: "item-red-btn" %>
@@ -31,12 +31,12 @@
     <%= link_to '削除', item_path(@item), method: :delete, class:'item-destroy' %>
     <% end %>
   <% end %>
-  <%# 「ログインしてるか?」「出品者とログインユーザーが異なるか?」 %>
-  <% if not user_signed_in? && @item.user.id != current_user.id %>
 
-  <%# 「購入済かどうか?」 %>
-  <%elsif not @item.purchase.present? %>
-      <%= link_to '購入画面に進む', new_item_purchase_path(@item) ,class:"item-red-btn"%>
+  <%# 購入済かどうか? %>
+  <% if @item.purchase.present? %>
+  <%# ログインしているか?　出品者と購入者が異なるか? %>
+  <% elsif user_signed_in? && @item.user.id != current_user.id  %>
+    <%= link_to '購入画面に進む', new_item_purchase_path(@item) ,class:"item-red-btn"%>
   <% end %>
 
 

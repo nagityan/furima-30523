@@ -1,12 +1,15 @@
 class PurchasesController < ApplicationController
+  #ログインの状態に関わらず、購入済の商品の"購入画面"には遷移できない
+  before_action :move_to_top,only:[:new]
+
   #ログインしていないユーザーはログイン画面へ
   before_action :authenticate_user!
 
-  #ログインしていても購入済の商品の"購入画面"には遷移できない
-  before_action :move_to_top,only:[:new]
+  #@を定義
+  before_action :item_find
   
   def new
-    @item = Item.find(params[:item_id])
+    item_find
     @user_purchase = UserPurchase.new
     if current_user.id == @item.user_id || @item.purchase.present?
       redirect_to root_path
@@ -15,7 +18,7 @@ class PurchasesController < ApplicationController
 
   #購入後はTOPページへ遷移
   def create
-    @item = Item.find(params[:item_id])
+    item_find
     @user_purchase = UserPurchase.new(params_data)
     if @user_purchase.valid?
       pay_item
@@ -44,6 +47,10 @@ class PurchasesController < ApplicationController
     if Item.find(params[:item_id]).purchase.present?
       redirect_to root_path
     end
+  end
+
+  def item_find
+    @item = Item.find(params[:item_id])
   end
 
 end
